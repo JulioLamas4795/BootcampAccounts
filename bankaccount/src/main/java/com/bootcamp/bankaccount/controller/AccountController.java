@@ -34,8 +34,8 @@ public class AccountController {
         return accountService.getAccountById(id);
     }
 
-    @CircuitBreaker(name = "saveAccountCB", fallbackMethod = "fallbackSaveAccount")
-    @TimeLimiter(name = "saveAccountCB")
+    //@CircuitBreaker(name = "saveAccountCB", fallbackMethod = "fallbackSaveAccount")
+    //@TimeLimiter(name = "saveAccountCB")
     @PostMapping()
     public Mono<AccountDto> saveAccount(@RequestBody AccountDto accountDtoMono) {
         LOGGER.debug("Saving accounts!");

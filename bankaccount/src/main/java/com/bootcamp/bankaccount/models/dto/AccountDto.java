@@ -1,6 +1,7 @@
 package com.bootcamp.bankaccount.models.dto;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 
 import java.time.LocalDateTime;
 
@@ -10,6 +11,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 public class AccountDto {
+
+    @Id
     private String id;
 
     private String accountNumber;
@@ -37,7 +40,5 @@ public class AccountDto {
     private Double minimumDailyAverageAmountEachMonth;
 
     private int maxLimitTransaction;
-
-
 
 }

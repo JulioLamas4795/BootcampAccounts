@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
 
 
 */
-        if(accountDto.getAccountType()=="VIP"||accountDto.getAccountType()=="PYME"){
+        if(accountDto.getAccountType()=="03"||accountDto.getAccountType()=="04"){
             CreditCardDto haveCreditCard = restTemplate.getForObject(urlApigateway + urlCreditCard + accountDto.getAccountType(), CreditCardDto.class);
             if(haveCreditCard!=null){
                 if(accountDto.getBalance()>=accountDto.getMinimumOpeningAmount()){
@@ -83,27 +83,35 @@ public class AccountServiceImpl implements AccountService {
                 }
             }
             else{
-                LOGGER.debug("Cliente no se registró porque según el tipo de producto requiere tener una tarjeta de crédito");
-                return null;
-            }
-
-        }
-        else{
-            if(accountDto.getBalance()>=accountDto.getMinimumOpeningAmount()){
+                /*LOGGER.debug("Cliente no se registró porque según el tipo de producto requiere tener una tarjeta de crédito");
+                return null;*/
                 ClientDto dto = obtainClient(accountDto.getClientIdNumber());
                 return Mono.just(accountDto).map(AppUtils::dtoToEntity)
                         .flatMap(accountRepository::insert)
                         .map(AppUtils::entityToDto);
             }
-            else{
-                LOGGER.debug("CLiente no se registró porque el monto inicial no es mayor a el mínimo de apertura");
-                return null;
+
+        }
+        else{
+            /*if(accountDto.getBalance()>=accountDto.getMinimumOpeningAmount()){
+                ClientDto dto = obtainClient(accountDto.getClientIdNumber());
+                return Mono.just(accountDto).map(AppUtils::dtoToEntity)
+                        .flatMap(accountRepository::insert)
+                        .map(AppUtils::entityToDto);
+            }
+            else{*/
+                /*LOGGER.debug("CLiente no se registró porque el monto inicial no es mayor a el mínimo de apertura");
+                return null;*/
+                ClientDto dto = obtainClient(accountDto.getClientIdNumber());
+                    return Mono.just(accountDto).map(AppUtils::dtoToEntity)
+                    .flatMap(accountRepository::insert)
+                    .map(AppUtils::entityToDto);
             }
         }
 
 
 
-    }
+    //}
 
     /*private AccountDto obtainAccountsClient(Account account, ClientDto client) {
         Flux<Account> acc = accountRepository.findByClientIdNumber(account.getClientIdNumber());
