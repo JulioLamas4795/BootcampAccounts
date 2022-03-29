@@ -1,5 +1,6 @@
 package com.bootcamp.bankaccount.controller;
 
+import com.bootcamp.bankaccount.models.bean.Account;
 import com.bootcamp.bankaccount.models.dto.AccountDto;
 import com.bootcamp.bankaccount.service.AccountService;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
@@ -32,6 +33,11 @@ public class AccountController {
     public Mono<AccountDto> getAccount(@PathVariable String id) {
         LOGGER.debug("Getting a account!");
         return accountService.getAccountById(id);
+    }
+
+    @GetMapping("/client/{clientIdNumber}")
+    public Flux<Account> findByClientIdNumber(@PathVariable String clientIdNumber) {
+        return accountService.findByClientIdNumber(clientIdNumber);
     }
 
     //@CircuitBreaker(name = "saveAccountCB", fallbackMethod = "fallbackSaveAccount")
@@ -68,5 +74,7 @@ public class AccountController {
         LOGGER.debug("Respondiendo con fallbackGetAccountTime");
         return Flux.just(new AccountDto());
     }
+
+
 
 }
